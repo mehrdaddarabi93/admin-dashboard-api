@@ -1,0 +1,38 @@
+services:
+  # ─── سرویس اول: API ما ─────────────────────────────────────────
+  api:
+    build: .                    # از Dockerfile همین پوشه بساز
+    container_name: admin-api
+    ports:
+      - "5000:5000"             # پورت لوکال:پورت container
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongo:27017/admin-dashboard
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - FRONTEND_URL=${FRONTEND_URL}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - NODE_ENV=production
+    depends_on:
+      mongo:
+        condition: service_healthy   # صبر کن MongoDB آماده بشه
+    restart: unless-stopped          # اگه crash کرد، خودش ریستارت بشه
+
+  # ─── سرویس دوم: MongoDB ────────────────────────────────────────
+  mongo:
+    image: mongo:7               # image آماده از Docker Hub
+    container_name: admin-mongo
+    ports:
+      - "27018:27017"            # پورت 27018 لوکال ← 27017 داخل container
+                                 # 27018 تا با MongoDB لوکال تداخل نداشته باشه
+    volumes:
+      - mongo-data:/data/db      # داده‌ها رو ذخیره کن (حتی بعد از خاموش شدن)
+    healthcheck:                 # چک کن MongoDB واقعاً آماده‌ست
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# ─── Volume برای ذخیره دائمی داده‌های MongoDB ──────────────────
+volumes:
+  mongo-data:

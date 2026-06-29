@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Environment variables (مهم: هرگز .env رو commit نکن)
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Uploads (فایل‌های آپلودشده توسط کاربران)
+uploads/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+docker-compose.override.yml

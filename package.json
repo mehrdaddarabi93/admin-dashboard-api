@@ -1,0 +1,42 @@
+{
+  "name": "admin-dashboard-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+ "scripts": {
+  "start": "node src/server.js",
+  "dev": "nodemon src/server.js",
+  "test": "jest --runInBand --forceExit --detectOpenHandles",
+  "test:watch": "jest --runInBand --forceExit --watch"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "helmet": "^8.2.0",
+    "joi": "^18.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.6.3",
+    "multer": "^2.1.1",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.14",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+  "testEnvironment": "node",
+  "globalSetup": "<rootDir>/tests/setup.js",
+  "globalTeardown": "<rootDir>/tests/teardown.js",
+  "testMatch": ["<rootDir>/tests/**/*.test.js"],
+  "testTimeout": 15000
+  }
+}
